@@ -11,8 +11,6 @@ const getUserById = id => usersRepo.getUserById(id);
 // Create a new user
 const createNewUser = async newUser => {
   const user = new User(newUser);
-
-  // try catch
   return usersRepo.createNewUser(User.toSend(user)).then(() => {
     return User.toResponse(user);
   });

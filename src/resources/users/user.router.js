@@ -13,29 +13,10 @@ const MongooseUser = require('./user.memory.repository').MongooseUser;
 router.route('/').get(async (req, res) => {
   const users = await usersService.getAll();
   res.status(200).json(users.map(User.toGet));
-  // try {
-  //   const users = await usersService.getAll();
-  //   res.status(200).json(users.map(User.toGet));
-  // } catch (err) {
-  //   res.status(500).send(err.message);
-  // }
 });
 
 // Get a user by ID
 router.route('/:userId').get(async (req, res) => {
-  // MongooseUser.findById(req.params.userId)
-  //   .exec()
-  //   .then(data => {
-  //     if (!data) {
-  //       return res
-  //         .status(404)
-  //         .send(`The user with the ID: ${req.params.userId} was NOT found`);
-  //     }
-  //     res.status(200).json(User.toGet(data.toObject()));
-  //   })
-  //   .catch(err => {
-  //     res.status(500).json(err);
-  //   });
   const user = await usersService.getUserById(req.params.userId);
   if (!user) {
     return res
@@ -43,27 +24,10 @@ router.route('/:userId').get(async (req, res) => {
       .send(`The user with the ID: ${req.params.userId} was NOT found`);
   }
   res.status(200).json(User.toGet(user.toObject()));
-  // try catch
 });
 
 // Create a new user
 router.route('/').post(async (req, res) => {
-  // const user = new User(req.body);
-
-  // const mongooseUser = new MongooseUser(User.toSend(user));
-  // mongooseUser
-  //   .save()
-  //   .then(() => {
-  //     res.status(200).json(User.toResponse(user));
-  //   })
-  //   .catch(err => {
-  //     res.status(500).json(err);
-  //   });
-
-  //
-  // const user = await usersService.createNewUser(req.body);
-  // res.status(200).json(user);
-  // try catch
   const user = await usersService.createNewUser(req.body);
   res.status(200).json(user);
 });
