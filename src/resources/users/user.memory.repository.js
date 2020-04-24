@@ -42,15 +42,7 @@ const getUserById = async id => {
 
 const createNewUser = async newUser => {
   const mongooseUser = new MongooseUser(newUser);
-
-  return mongooseUser
-    .save()
-    .then(() => {
-      return mongooseUser;
-    })
-    .catch(err => {
-      return err;
-    });
+  return mongooseUser.save();
 };
 
 module.exports = {
