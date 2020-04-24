@@ -73,6 +73,7 @@ const createNewUser = async newUser => {
       // res.status(200).json(User.toResponse(user));
       // ?
       // return User.toResponse(user);
+      // ?
       return mongooseUser;
     })
     .catch(err => {

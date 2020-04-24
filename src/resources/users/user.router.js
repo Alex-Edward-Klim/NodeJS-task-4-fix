@@ -3,14 +3,22 @@ const User = require('./user.model');
 const usersService = require('./user.service');
 
 // const tasksService = require('../tasks/task.service');
+
 const MongooseTask = require('../tasks/task.router').MongooseTask;
 
 // Temp
 const MongooseUser = require('./user.memory.repository').MongooseUser;
+
 // Get all users
 router.route('/').get(async (req, res) => {
   const users = await usersService.getAll();
   res.status(200).json(users.map(User.toGet));
+  // try {
+  //   const users = await usersService.getAll();
+  //   res.status(200).json(users.map(User.toGet));
+  // } catch (err) {
+  //   res.status(500).send(err.message);
+  // }
 });
 
 // Get a user by ID

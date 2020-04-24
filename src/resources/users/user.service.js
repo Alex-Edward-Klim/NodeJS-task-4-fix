@@ -2,14 +2,13 @@ const usersRepo = require('./user.memory.repository');
 
 const User = require('./user.model');
 
+// Get all users
 const getAll = () => usersRepo.getAll();
 
-//
+// Get a user by ID
 const getUserById = id => usersRepo.getUserById(id);
 
-//
-// const createNewUser = newUser => usersRepo.createNewUser(newUser);
-
+// Create a new user
 const createNewUser = async newUser => {
   const user = new User(newUser);
 
