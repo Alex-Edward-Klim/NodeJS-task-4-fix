@@ -14,7 +14,6 @@ const connectToDB = callBackFunction => {
   const db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', () => {
-    // Drop the DataBase!!!
     console.log('Connected to the DataBase!');
     callBackFunction();
   });

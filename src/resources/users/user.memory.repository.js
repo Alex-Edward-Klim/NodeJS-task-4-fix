@@ -1,5 +1,3 @@
-// const User = require('./user.model');
-
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
@@ -16,6 +14,8 @@ const customSchema = new Schema(
 );
 
 const MongooseUser = mongoose.model('User', customSchema);
+
+const MongooseTask = require('../tasks/task.memory.repository').MongooseTask;
 
 const getAll = async () => {
   return MongooseUser.find()
@@ -45,9 +45,47 @@ const createNewUser = async newUser => {
   return mongooseUser.save();
 };
 
+const updateUserById = async (id, requestBody) => {
+  return MongooseUser.findByIdAndUpdate(
+    id,
+    requestBody,
+    { new: true, useFindAndModify: false },
+    (err, doc) => {
+      if (err) {
+        return err;
+      }
+      return doc;
+    }
+  );
+};
+
+const deleteUserById = async id => {
+  return new Promise(res => {
+    MongooseUser.findOneAndRemove(
+      { _id: id },
+      { useFindAndModify: false }
+    ).exec((err, item) => {
+      if (err) {
+        res(err);
+      } else if (!item) {
+        res(null);
+      } else {
+        MongooseTask.updateMany({ userId: id }, { userId: null }, error => {
+          if (err) {
+            res(error);
+          }
+          res(item);
+        });
+      }
+    });
+  });
+};
+
 module.exports = {
   getAll,
   MongooseUser,
   getUserById,
-  createNewUser
+  createNewUser,
+  updateUserById,
+  deleteUserById
 };
